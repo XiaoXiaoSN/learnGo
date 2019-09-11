@@ -1,3 +1,3 @@
-module projects/testing-go/smtp
+module github.com/XiaoXiaoSN/learnGo/smtp
 
 go 1.12
