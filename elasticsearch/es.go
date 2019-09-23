@@ -6,6 +6,8 @@ import (
 	es "github.com/elastic/go-elasticsearch/v7"
 )
 
+// TODO: https://github.com/elastic/go-elasticsearch/blob/master/elasticsearch_internal_test.go
+
 // ElasticSearch 是一個 elastic 物件
 type ElasticSearch struct {
 	Client *es.Client
