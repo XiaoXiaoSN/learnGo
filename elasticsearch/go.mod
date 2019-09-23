@@ -1,7 +1,8 @@
-module github.com/XiaoXiaoSN/learnGo/elasticsearch
+module github.com/XiaoXiaoSN/elasticsearch
 
 go 1.12
 
 require (
-	github.com/elastic/go-elasticsearch/v6 v6.8.2
+	github.com/elastic/go-elasticsearch v0.0.0
+	github.com/elastic/go-elasticsearch/v7 v7.3.0
 )

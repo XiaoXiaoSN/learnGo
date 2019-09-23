@@ -3,7 +3,7 @@ package elasticsearch
 import (
 	"log"
 
-	es "github.com/elastic/go-elasticsearch/v6"
+	es "github.com/elastic/go-elasticsearch/v7"
 )
 
 // ElasticSearch 是一個 elastic 物件
@@ -13,8 +13,8 @@ type ElasticSearch struct {
 }
 
 // NewElasticSearch 產生一個 ElasticSearch 物件
-func NewElasticSearch(cfg *Configuration) (*ElasticSearch, error) {
-	esConfig := Configuration{
+func NewElasticSearch(cfg Configuration) (*ElasticSearch, error) {
+	esConfig := es.Config{
 		Addresses: cfg.Addresses,
 		Username:  cfg.Username,
 		Password:  cfg.Password,
