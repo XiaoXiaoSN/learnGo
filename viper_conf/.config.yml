@@ -1,0 +1,8 @@
+default: true
+defaultvalue: ""
+env: code
+service:
+- enable: false
+  host: h1
+- enable: false
+  host: ""

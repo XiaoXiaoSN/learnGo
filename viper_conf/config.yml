@@ -1,0 +1,4 @@
+env: debug
+defaultValue: defaultValue2222
+service:
+  host: "name"
