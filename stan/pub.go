@@ -5,22 +5,25 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nats-io/nats.go"
+	"github.com/google/uuid"
+	stan "github.com/nats-io/stan.go"
 )
 
 var natsURLs = []string{
+	"nats://localhost:4222",
 	"nats://localhost:4223",
 	// "nats://localhost:4224",
 	// "nats://localhost:4225",
 }
 
 func main() {
-	topic := "topic.3.acc.1"
+	clusterID := "test-cluster"
+	clientID := uuid.New().String()
+	topic := "topic.[1|3]"
 
-	sc, err := nats.Connect(strings.Join(natsURLs, ","))
+	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL(strings.Join(natsURLs, ",")))
 	if err != nil {
-		fmt.Println("nats.Connect >  ", err)
-		return
+		panic(err)
 	}
 	defer sc.Close()
 
@@ -31,6 +34,12 @@ func main() {
 		err := sc.Publish(topic, []byte(word))
 		if err != nil {
 			fmt.Println("Public error: ", err)
+
+			sc.Close()
+			sc, err = stan.Connect(clusterID, clientID, stan.NatsURL(strings.Join(natsURLs, ",")))
+			if err != nil {
+				panic(err)
+			}
 		}
 		fmt.Println(word)
 

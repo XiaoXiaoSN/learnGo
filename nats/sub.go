@@ -1,35 +1,50 @@
 package main
 
 import (
+	"bytes"
+	"compress/flate"
 	"fmt"
+	"io/ioutil"
+	"strings"
 
-	"github.com/google/uuid"
-	stan "github.com/nats-io/stan.go"
+	"github.com/nats-io/nats.go"
 )
 
-func main() {
-	clusterID := "test-cluster"
-	clientID := uuid.New().String()
-	clientID = "ddd"
+var natsURLs = []string{
+	"nats://localhost:4223",
+	// "nats://localhost:4224",
+	// "nats://localhost:4225",
+}
 
-	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL("nats://localhost:4223"))
+func main() {
+	topic := "@@pop.>"
+
+	sc, err := nats.Connect(strings.Join(natsURLs, ","))
 	if err != nil {
-		fmt.Println("stan.Connect >  ", err)
+		fmt.Println("nats.Connect >  ", err)
 		return
 	}
-	// Close connection
 	defer sc.Close()
 
-	// td, _ := time.ParseDuration("10s")
-
 	// Simple Async Subscriber
-	sub, _ := sc.Subscribe("foo", func(m *stan.Msg) {
-		fmt.Printf("Received a message: %s\n", string(m.Data))
-	}, stan.DurableName("my-durable"))
+	sub, err := sc.Subscribe(topic, func(m *nats.Msg) {
+		d, _ := DeflateDecode(m.Data)
+		fmt.Printf("Received a message: %s\n", string(d))
+		m.Respond([]byte("got you"))
+	})
+	if err != nil {
+		fmt.Println("Subscribe error: ", err)
+	}
 
 	// Unsubscribe
 	defer sub.Unsubscribe()
 
+	fmt.Println("subscribe ok...")
+
 	// hold on
 	select {}
+}
+
+func DeflateDecode(input []byte) (result []byte, err error) {
+	return ioutil.ReadAll(flate.NewReader(bytes.NewReader(input)))
 }

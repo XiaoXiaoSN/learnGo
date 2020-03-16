@@ -1,0 +1,30 @@
+version: '3.5'
+
+networks:
+  cherry-network:
+    name: cherry-network
+    driver: bridge
+
+services:
+  nats-0:
+    image: nats-streaming
+    networks:
+      - cherry-network
+    # command: -p 4222 -m 8222 -cid test-cluster -store file -dir /datastore -ft_group "ft" -cluster nats://nats-0:6222 -routes nats://nats-1:6222
+    volumes:
+      - ./.data/nats/nats-0:/datastore
+    ports:
+      - 4222:4222
+      - 8222:8222
+
+  # nats-1:
+  #   image: nats-streaming
+  #   networks:
+  #     - cherry-network
+  #   command: -p 4222 -m 8222 -cid test-cluster -store file -dir /datastore -ft_group "ft" -cluster nats://nats-1:6222 -routes nats://nats-0:6222
+  #   volumes:
+  #     - ./.data/nats/nats-1:/datastore
+  #   ports:
+  #     - 4223:4222
+  #     - 8223:8222
+
