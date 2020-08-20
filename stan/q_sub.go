@@ -9,15 +9,16 @@ import (
 )
 
 var natsURLs = []string{
-	"nats://localhost:4223",
-	"nats://localhost:4224",
-	"nats://localhost:4225",
+	"nats://dev-gam-api.silkrode.com.tw:32002",
+	// "nats://localhost:4223",
+	// "nats://localhost:4224",
+	// "nats://localhost:4225",
 }
 
 func main() {
-	clusterID := "test-cluster"
+	clusterID := "gam"
 	clientID := uuid.New().String()
-	clientID = "ddd"
+	topic := "queue-topic-1"
 
 	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL(strings.Join(natsURLs, ",")))
 	if err != nil {
@@ -30,7 +31,8 @@ func main() {
 	// Create a queue subscriber on "foo" for group "group1"
 	go func() {
 		queueID := 1
-		qsub, _ := sc.QueueSubscribe("foo", "group1", func(m *stan.Msg) {
+		// qsub, _ := sc.Subscribe(topic, func(m *stan.Msg) {
+		qsub, _ := sc.QueueSubscribe(topic, "group1", func(m *stan.Msg) {
 			fmt.Printf("[%d] Received a message: %s\n", queueID, string(m.Data))
 		})
 		defer qsub.Unsubscribe()
@@ -43,7 +45,8 @@ func main() {
 	// Create a queue subscriber on "foo" for group "group1"
 	go func() {
 		queueID := 2
-		qsub, _ := sc.QueueSubscribe("foo", "group1", func(m *stan.Msg) {
+		// qsub, _ := sc.Subscribe(topic, func(m *stan.Msg) {
+		qsub, _ := sc.QueueSubscribe(topic, "group2", func(m *stan.Msg) {
 			fmt.Printf("[%d] Received a message: %s\n", queueID, string(m.Data))
 		})
 		defer qsub.Unsubscribe()

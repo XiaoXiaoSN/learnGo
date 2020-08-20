@@ -18,9 +18,9 @@ var natsURLs = []string{
 }
 
 func main() {
-	clusterID := "test-cluster"
+	clusterID := "gam"
 	clientID := uuid.New().String()
-	topic := "topic.[1|3]"
+	topic := "queue-topic-1"
 
 	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL(strings.Join(natsURLs, ",")))
 	if err != nil {
