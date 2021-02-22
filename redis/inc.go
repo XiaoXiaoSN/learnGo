@@ -1,12 +1,12 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"time"
 
 	"github.com/go-redis/redis"
 )
-
 
 var pid string
 

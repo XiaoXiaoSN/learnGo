@@ -4,20 +4,20 @@ import (
 	"fmt"
 	"strings"
 
-	//"github.com/google/uuid"
+	"github.com/google/uuid"
 	stan "github.com/nats-io/stan.go"
 )
 
 var natsURLs = []string{
-	"nats://dev-gam-api.silkrode.com.tw:32002",
-	//"nats://localhost:4222",
+	//	"nats://dev-gam-api.silkrode.com.tw:32002",
+	"nats://localhost:4222",
 	//"nats://localhost:4223",
 	// "nats://localhost:4224",
 	// "nats://localhost:4225",
 }
 
 func main() {
-	clusterID := "test-cluster"
+	clusterID := "gam"
 	clientID := uuid.New().String()
 	topic := "@@pop.topics"
 

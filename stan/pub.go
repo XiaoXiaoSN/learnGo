@@ -10,8 +10,8 @@ import (
 )
 
 var natsURLs = []string{
-	"nats://dev-gam-api.silkrode.com.tw:32002",
-	//"nats://localhost:4222",
+	//	"nats://dev-gam-api.silkrode.com.tw:32002",
+	"nats://localhost:4222",
 	//"nats://localhost:4223",
 	// "nats://localhost:4224",
 	// "nats://localhost:4225",
@@ -20,7 +20,8 @@ var natsURLs = []string{
 func main() {
 	clusterID := "test-cluster"
 	clientID := uuid.New().String()
-	topic := "topic.[1|3]"
+	// topic := "topic.[1|3]"
+	topic := "@@pop.topics"
 
 	sc, err := stan.Connect(clusterID, clientID, stan.NatsURL(strings.Join(natsURLs, ",")))
 	if err != nil {

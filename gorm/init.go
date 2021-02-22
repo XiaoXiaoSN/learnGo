@@ -4,7 +4,8 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	// _ "github.com/go-sql-driver/mysql"
 	"github.com/jinzhu/gorm"
 )
 
@@ -32,4 +33,4 @@ func init() {
 func migration() {
 	db.AutoMigrate(&User{})
 	fmt.Println("migration done.")
-}
+} 

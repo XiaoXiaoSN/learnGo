@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/XiaoXiaoSN/learnGo/pprof/data"
+	// "github.com/XiaoXiaoSN/learnGo/pprof/data"
 
-	"log"
+	// "log"
 	"net/http"
 	_ "net/http/pprof"
 	"time"
@@ -12,7 +12,7 @@ import (
 func main() {
 	go func() {
 		for {
-			log.Println(data.Add("https://github.com/EDDYCJY"))
+			// log.Println(data.Add("https://github.com/EDDYCJY"))
 			time.Sleep(time.Second)
 		}
 	}()
