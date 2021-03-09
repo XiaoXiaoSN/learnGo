@@ -1,0 +1,20 @@
+FROM golang:latest AS builder
+WORKDIR /client
+ENV GO111MODULE=on 
+
+COPY . .
+RUN go mod download
+RUN GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build  -mod=vendor -o main
+
+
+FROM alpine:latest
+
+# RUN apk update && \
+#     apk upgrade && \
+#     apk add --no-cache curl tzdata && \
+#     apk add ca-certificates && \
+#     rm -rf /var/cache/apk/*
+
+WORKDIR /
+COPY --from=builder /client/main /main
+CMD ["./main"]
