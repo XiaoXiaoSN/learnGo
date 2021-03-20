@@ -24,6 +24,8 @@ func main() {
 		DB:         1,
 	})
 
+	var data = "data-"
+
 	go func() {
 		v, err := client.SetNX("key", data+"1", 5*time.Second).Result()
 		if err != nil {
